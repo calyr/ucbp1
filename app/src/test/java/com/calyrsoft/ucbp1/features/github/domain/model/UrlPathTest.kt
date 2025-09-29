@@ -28,7 +28,7 @@ class UrlPathTest {
     }
 
     @Test
-    fun `should create UrlPath when value is valid`() {
+    fun `should create UrlPath when value is valid`() { //Arragne, Act  Asset
         val url = UrlPath("https://github.com/users/juan")
         assert(url.value == "https://github.com/users/juan")
     }

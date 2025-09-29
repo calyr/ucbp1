@@ -24,6 +24,7 @@ import com.calyrsoft.ucbp1.features.profile.application.ProfileViewModel
 import com.calyrsoft.ucbp1.features.profile.data.repository.ProfileRepository
 import com.calyrsoft.ucbp1.features.profile.domain.repository.IProfileRepository
 import com.calyrsoft.ucbp1.features.profile.domain.usecase.GetProfileUseCase
+import com.calyrsoft.ucbp1.navigation.NavigationViewModel
 import okhttp3.OkHttpClient
 import org.koin.android.BuildConfig
 import org.koin.android.ext.koin.androidApplication
@@ -106,4 +107,6 @@ val appModule = module {
     single<IMoviesRepository> { MovieRepository(get()) }
     factory { FetchPopularMoviesUseCase(get()) }
     viewModel{ PopularMoviesViewModel(get()) }
+
+    viewModel { NavigationViewModel() }
 }

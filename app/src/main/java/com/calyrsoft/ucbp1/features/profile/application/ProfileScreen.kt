@@ -61,12 +61,12 @@ fun ProfileScreen(
                 )
 
                 Text(
-                    text = st.profile.email,
+                    text = st.profile.email.value,
                     style = MaterialTheme.typography.bodyMedium
                 )
 
                 Text(
-                    text = st.profile.cellphone,
+                    text = st.profile.cellphone.value,
                     style = MaterialTheme.typography.bodyMedium
                 )
 

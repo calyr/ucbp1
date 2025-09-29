@@ -10,7 +10,6 @@ value class UrlPath(val value: String) {
         require(value.isNotEmpty()) {
             "UrlPath must not be empty"
         }
-
     }
 
     override fun toString(): String = value

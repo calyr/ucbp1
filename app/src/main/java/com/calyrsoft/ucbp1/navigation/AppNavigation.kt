@@ -1,6 +1,7 @@
 package com.calyrsoft.ucbp1.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -13,8 +14,35 @@ import com.calyrsoft.ucbp1.features.movie.presentation.PopularMoviesScreen
 import com.calyrsoft.ucbp1.features.profile.application.ProfileScreen
 
 @Composable
-fun AppNavigation() {
+fun AppNavigation(navigationViewModel: NavigationViewModel) {
     val navController: NavHostController = rememberNavController()
+
+    // Manejar navegación desde el ViewModel
+    LaunchedEffect(Unit) {
+        navigationViewModel.navigationCommand.collect { command ->
+            when (command) {
+                is NavigationViewModel.NavigationCommand.NavigateTo -> {
+                    navController.navigate(command.route) {
+                        // Configuración del back stack según sea necesario
+                        when (command.options) {
+                            NavigationOptions.CLEAR_BACK_STACK -> {
+                                popUpTo(0) // Limpiar todo el back stack
+                            }
+                            NavigationOptions.REPLACE_HOME -> {
+                                popUpTo(Screen.Dollar.route) { inclusive = true }
+                            }
+                            else -> {
+                                // Navegación normal
+                            }
+                        }
+                    }
+                }
+                is NavigationViewModel.NavigationCommand.PopBackStack -> {
+                    navController.popBackStack()
+                }
+            }
+        }
+    }
 
     NavHost(
         navController = navController,
@@ -38,4 +66,6 @@ fun AppNavigation() {
 
         composable(Screen.PopularMovies.route) { PopularMoviesScreen() }
     }
+
+
 }

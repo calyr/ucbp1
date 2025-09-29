@@ -1,6 +1,7 @@
 package com.calyrsoft.ucbp1.features.github.domain.usecase
 
 import androidx.annotation.OptIn
+import com.calyrsoft.ucbp1.features.github.domain.model.NickName
 import com.calyrsoft.ucbp1.features.github.domain.model.UrlPath
 import com.calyrsoft.ucbp1.features.github.domain.model.UserModel
 import com.calyrsoft.ucbp1.features.github.domain.repository.IGithubRepository
@@ -19,7 +20,7 @@ class FindByNickNameUseCaseTest {
     @Test
     fun `should return success when repository returns user`() = runTest {
         // Arrange
-        val expected = UserModel(nickname = "juan", pathUrl = UrlPath("https://test.url"))
+        val expected = UserModel(nickname = NickName("juan"), pathUrl = UrlPath("https://test.url"))
         coEvery { repository.findByNick("juan") } returns Result.success(expected)
 
         // Act

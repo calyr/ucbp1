@@ -1,6 +1,9 @@
 package com.calyrsoft.ucbp1.features.profile.data.repository
 
+import com.calyrsoft.ucbp1.features.github.domain.model.UrlPath
+import com.calyrsoft.ucbp1.features.login.domain.model.Email
 import com.calyrsoft.ucbp1.features.profile.domain.model.ProfileModel
+import com.calyrsoft.ucbp1.features.profile.domain.model.vo.Cellphone
 import com.calyrsoft.ucbp1.features.profile.domain.repository.IProfileRepository
 
 class ProfileRepository: IProfileRepository {
@@ -8,9 +11,9 @@ class ProfileRepository: IProfileRepository {
         return Result.success(
             ProfileModel(
                 name = "Homero J. Simpson",
-                email = "homero.simpson@springfieldmail.com",
-                cellphone = "+1 (939) 555‑7422",
-                pathUrl = "https://www.viaempresa.cat/uploads/s1/43/99/69/homer.jpg",
+                email = Email.create("homero.simpson@springfieldmail.com"),
+                cellphone = Cellphone("+1 (939) 555‑7422"),
+                pathUrl = UrlPath("https://www.viaempresa.cat/uploads/s1/43/99/69/homer.pg"),
                 summary = "Ciudadano de Springfield y dedicado inspector de seguridad en la Planta Nuclear."
             )
         )

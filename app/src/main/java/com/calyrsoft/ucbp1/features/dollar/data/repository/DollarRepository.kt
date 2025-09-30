@@ -23,4 +23,12 @@ class DollarRepository(
             }
 
     }
+
+    override suspend fun getDollarParallel(): Flow<DollarModel> {
+        return realTimeRemoteDataSource.getDollarParallelUpdates()
+            .onEach {
+                localDataSource.insert(it)
+            }
+
+    }
 }

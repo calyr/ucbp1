@@ -10,11 +10,14 @@ data class DollarEntity(
     @ColumnInfo(name = "id")
     var id: Int = 0,
 
-    @ColumnInfo(name = "dollar_official")
-    var dollarOfficial: String? = null,
+    @ColumnInfo(name = "purchasePrice")
+    var purchasePrice: String? = null,
 
-    @ColumnInfo(name = "dollar_parallel")
-    var dollarParallel: String? = null,
+    @ColumnInfo(name = "salesPrice")
+    var salesPrice: String? = null,
+
+    @ColumnInfo(name = "type")
+    var type: String? = null,
 
     @ColumnInfo(name = "timestamp")
     var timestamp: Long = 0)

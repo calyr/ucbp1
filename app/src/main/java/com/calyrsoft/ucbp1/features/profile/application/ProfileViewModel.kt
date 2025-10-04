@@ -2,6 +2,7 @@ package com.calyrsoft.ucbp1.features.profile.application
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.calyrsoft.ucbp1.features.login.domain.usecase.SaveTokenUseCase
 import com.calyrsoft.ucbp1.features.profile.domain.model.ProfileModel
 import com.calyrsoft.ucbp1.features.profile.domain.usecase.GetProfileUseCase
 import kotlinx.coroutines.Dispatchers
@@ -11,7 +12,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class ProfileViewModel(
-    val profileUseCase: GetProfileUseCase
+    val profileUseCase: GetProfileUseCase,
+    val saveToken: SaveTokenUseCase
 ): ViewModel() {
     // UI STATE
     sealed class ProfileUiState {
@@ -33,6 +35,7 @@ class ProfileViewModel(
             resultProfile.fold(
                 onSuccess = {
                    _state.value = ProfileUiState.Success(it)
+                    saveToken.invoke("MITOKEN")
                 },
                 onFailure = {
                     _state.value = ProfileUiState.Error(it.message.toString())

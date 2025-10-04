@@ -15,6 +15,11 @@ import com.calyrsoft.ucbp1.features.github.data.repository.GithubRepository
 import com.calyrsoft.ucbp1.features.github.domain.repository.IGithubRepository
 import com.calyrsoft.ucbp1.features.github.domain.usecase.FindByNickNameUseCase
 import com.calyrsoft.ucbp1.features.github.presentation.GithubViewModel
+import com.calyrsoft.ucbp1.features.login.data.datasource.LoginDataStore
+import com.calyrsoft.ucbp1.features.login.data.repository.RepositoryDataStore
+import com.calyrsoft.ucbp1.features.login.domain.repository.IRepositoryDataStore
+import com.calyrsoft.ucbp1.features.login.domain.usecase.GetTokenUseCase
+import com.calyrsoft.ucbp1.features.login.domain.usecase.SaveTokenUseCase
 import com.calyrsoft.ucbp1.features.movie.data.api.MovieService
 import com.calyrsoft.ucbp1.features.movie.data.datasource.MovieLocalDataSource
 import com.calyrsoft.ucbp1.features.movie.data.datasource.MovieRemoteDataSource
@@ -84,11 +89,11 @@ val appModule = module {
     single<IGithubRepository>{ GithubRepository(get()) }
 
     factory { FindByNickNameUseCase(get()) }
-    viewModel { GithubViewModel(get(), get()) }
+    viewModel { GithubViewModel(get(), get(), get()) }
 
     single<IProfileRepository> { ProfileRepository() }
     factory { GetProfileUseCase(get()) }
-    viewModel { ProfileViewModel(get()) }
+    viewModel { ProfileViewModel(get(), get()) }
 
     single { AppRoomDatabase.getDatabase(get()) }
     single(named("dollarDao")) { get<AppRoomDatabase>().dollarDao() }
@@ -116,4 +121,8 @@ val appModule = module {
     viewModel{ PopularMoviesViewModel(get(), get()) }
 
     viewModel { NavigationViewModel() }
+    single { LoginDataStore(androidContext()) }
+    single<IRepositoryDataStore>{RepositoryDataStore(get())}
+    factory { GetTokenUseCase(get()) }
+    factory { SaveTokenUseCase(get()) }
 }

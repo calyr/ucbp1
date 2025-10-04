@@ -29,4 +29,21 @@ class LoginDataStore (
             Result.failure(Exception("User name not found"))
         }
     }
+
+    suspend fun saveToken(token: String) {
+        context.dataStore.edit {
+                preferences -> preferences[TOKEN] = token
+        }
+    }
+
+    suspend fun getToken(): String {
+        val preferences = context.dataStore.data.first()
+        return if (preferences[TOKEN] != null) {
+            preferences[TOKEN]!!
+        } else {
+            ""
+        }
+    }
+
+
 }

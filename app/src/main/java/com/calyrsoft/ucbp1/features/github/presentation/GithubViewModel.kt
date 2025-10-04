@@ -7,6 +7,7 @@ import com.calyrsoft.ucbp1.features.github.domain.error.Failure
 import com.calyrsoft.ucbp1.features.github.domain.model.UserModel
 import com.calyrsoft.ucbp1.features.github.domain.usecase.FindByNickNameUseCase
 import com.calyrsoft.ucbp1.features.github.presentation.error.ErrorMessageProvider
+import com.calyrsoft.ucbp1.features.login.domain.usecase.GetTokenUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,7 +17,8 @@ import kotlinx.coroutines.launch
 
 class GithubViewModel(
     val usecase: FindByNickNameUseCase,
-    val context: Context
+    val context: Context,
+    val getToken: GetTokenUseCase
 ): ViewModel() {
     sealed class GithubStateUI {
         object Init: GithubStateUI()
@@ -38,6 +40,7 @@ class GithubViewModel(
             result.fold(
                 onSuccess = {
                         user -> _state.value = GithubStateUI.Success( user )
+                        println("MITOKEN: ${getToken.invoke()}")
                 },
                 onFailure = {
                     val message = errorMessageProvider.getMessage(it as Failure)

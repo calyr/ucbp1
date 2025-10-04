@@ -6,7 +6,6 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import com.calyrsoft.ucbp1.features.cardexample.presentation.CardScreen
 import com.calyrsoft.ucbp1.features.dollar.presentation.DollarScreen
 import com.calyrsoft.ucbp1.features.github.presentation.GithubScreen
@@ -14,8 +13,7 @@ import com.calyrsoft.ucbp1.features.movie.presentation.PopularMoviesScreen
 import com.calyrsoft.ucbp1.features.profile.application.ProfileScreen
 
 @Composable
-fun AppNavigation(navigationViewModel: NavigationViewModel) {
-    val navController: NavHostController = rememberNavController()
+fun AppNavigation(navigationViewModel: NavigationViewModel, modifier: Modifier, navController: NavHostController) {
 
     // Manejar navegación desde el ViewModel
     LaunchedEffect(Unit) {
@@ -46,7 +44,8 @@ fun AppNavigation(navigationViewModel: NavigationViewModel) {
 
     NavHost(
         navController = navController,
-        startDestination = Screen.PopularMovies.route
+        startDestination = Screen.PopularMovies.route,
+        modifier = modifier
     ) {
         composable(Screen.Github.route) {
             GithubScreen(modifier = Modifier)

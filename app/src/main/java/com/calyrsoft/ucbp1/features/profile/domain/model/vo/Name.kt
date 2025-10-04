@@ -5,7 +5,7 @@ value class Name private constructor(val value: String) {
 
     companion object {
         fun create(raw: String): Name {
-            require(raw.isNullOrBlank()) {
+            require(raw.isNotEmpty()) {
                 "Name can not be null or blank"
             }
             val value = raw.trim()

@@ -9,14 +9,11 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import android.util.Log
-import com.google.firebase.messaging.FirebaseMessaging
-import kotlin.coroutines.resume
-import kotlin.coroutines.resumeWithException
-import kotlin.coroutines.suspendCoroutine
+import com.calyrsoft.ucbp1.features.dollar.domain.usecase.FetchDollarParallelUseCase
 
 class DollarViewModel(
-    val fetchDollarUseCase: FetchDollarUseCase
+    val fetchDollarUseCase: FetchDollarUseCase,
+    val fetchDollarParallelUseCase: FetchDollarParallelUseCase
 ): ViewModel() {
 
     sealed class DollarUIState {
@@ -27,35 +24,27 @@ class DollarViewModel(
 
     init {
         getDollar()
+        getDollarParallel()
     }
 
     private val _uiState = MutableStateFlow<DollarUIState>(DollarUIState.Loading)
     val uiState: StateFlow<DollarUIState> = _uiState.asStateFlow()
 
+    private val _uiStateParallel = MutableStateFlow<DollarUIState>(DollarUIState.Loading)
+    val uiStateParallel: StateFlow<DollarUIState> = _uiStateParallel.asStateFlow()
+
+
     fun getDollar() {
         viewModelScope.launch(Dispatchers.IO) {
-                    getToken()
                     fetchDollarUseCase.invoke().collect {
                         data -> _uiState.value = DollarUIState.Success(data) }
         }
     }
 
-    suspend fun getToken(): String = suspendCoroutine { continuation ->
-        FirebaseMessaging.getInstance().token
-            .addOnCompleteListener { task ->
-                if (!task.isSuccessful) {
-                    Log.w("FIREBASE", "getInstanceId failed", task.exception)
-                    continuation.resumeWithException(task.exception ?: Exception("Unknown error"))
-                    return@addOnCompleteListener
-                }
-                // Si la tarea fue exitosa, se obtiene el token
-                val token = task.result
-                Log.d("FIREBASE", "FCM Token: $token")
-
-                // Reanudar la ejecución con el token
-                continuation.resume(token ?: "")
-            }
+    fun getDollarParallel() {
+        viewModelScope.launch(Dispatchers.IO) {
+            fetchDollarParallelUseCase.invoke().collect {
+                    data -> _uiStateParallel.value = DollarUIState.Success(data) }
+        }
     }
-
-
 }

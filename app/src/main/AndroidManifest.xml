@@ -22,6 +22,16 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <!-- Para deep links -->
+            <!-- Deep links genérico para todos los hosts -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="ucbp1"
+                    android:host="*" />  <!-- Wildcard para cualquier host -->
+            </intent-filter>
         </activity>
         <service
             android:name=".features.notification.data.service.FirebaseService"

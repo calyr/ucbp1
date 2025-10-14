@@ -17,7 +17,8 @@ class EmailParameterizedTest(
         fun data(): Collection<Array<String>> = listOf(
             arrayOf("USER@DOMAIN.COM","user@domain.com"),
             arrayOf("USER@a.COM","user@a.com"),
-            arrayOf("Foo.Bar@gmail.com", "foo.bar@gmail.com")
+            arrayOf("        USER@a.COM","user@a.com"),
+            arrayOf("       Foo.Bar@gmail.com                  ", "foo.bar@gmail.com")
         )
     }
 

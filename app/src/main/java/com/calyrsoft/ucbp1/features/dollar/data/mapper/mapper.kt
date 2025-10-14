@@ -2,17 +2,21 @@ package com.calyrsoft.ucbp1.features.dollar.data.mapper
 
 import com.calyrsoft.ucbp1.features.dollar.data.database.entity.DollarEntity
 import com.calyrsoft.ucbp1.features.dollar.domain.model.DollarModel
+import com.calyrsoft.ucbp1.features.dollar.domain.model.TYPE
 
 fun DollarEntity.toModel() : DollarModel {
     return DollarModel(
-        dollarOfficial = dollarOfficial,
-        dollarParallel = dollarParallel
+        salesPrice = salesPrice,
+        purchasePrice = purchasePrice,
+        type = TYPE.valueOf(type ?: TYPE.OFFICIAL.name)
     )
 }
 
 fun DollarModel.toEntity() : DollarEntity {
     return DollarEntity(
-        dollarOfficial = dollarOfficial,
-        dollarParallel = dollarParallel)
+        purchasePrice = purchasePrice,
+        salesPrice = salesPrice,
+        type = type?.name
+    )
 }
 

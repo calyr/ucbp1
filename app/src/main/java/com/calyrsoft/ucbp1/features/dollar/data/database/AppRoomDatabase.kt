@@ -6,10 +6,13 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.calyrsoft.ucbp1.features.dollar.data.database.dao.IDollarDao
 import com.calyrsoft.ucbp1.features.dollar.data.database.entity.DollarEntity
+import com.calyrsoft.ucbp1.features.movie.data.database.dao.IMovieDao
+import com.calyrsoft.ucbp1.features.movie.data.database.entity.MovieEntity
 
-@Database(entities = [DollarEntity::class], version = 1)
+@Database(entities = [DollarEntity::class, MovieEntity::class], version = 1)
 abstract class AppRoomDatabase : RoomDatabase() {
     abstract fun dollarDao(): IDollarDao
+    abstract fun movieDao(): IMovieDao
 
 
     companion object {

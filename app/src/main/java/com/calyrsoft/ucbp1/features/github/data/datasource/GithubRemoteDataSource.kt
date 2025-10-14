@@ -3,6 +3,7 @@ package com.calyrsoft.ucbp1.features.github.data.datasource
 import com.calyrsoft.ucbp1.features.github.data.api.GithubService
 import com.calyrsoft.ucbp1.features.github.data.api.dto.GithubDto
 import com.calyrsoft.ucbp1.features.github.data.error.DataException
+import com.calyrsoft.ucbp1.features.github.domain.model.NickName
 import com.calyrsoft.ucbp1.features.github.domain.model.UrlPath
 import com.calyrsoft.ucbp1.features.github.domain.model.UserModel
 
@@ -16,7 +17,7 @@ class GithubRemoteDataSource(
             if (body != null) {
                 try {
                     return Result.success(UserModel(
-                        body.login,
+                        NickName(body.login),
                         UrlPath(body.url)
                     ))
                 } catch (e: Exception) {

@@ -1,5 +1,9 @@
 package com.calyrsoft.ucbp1.features.login.domain.model
 
+//    CALYR.software@gmail.com OK  Calyr.software@gmail.com OK  calyr.software@gmail.com
+//    calyr.software@gmail.com     calyr.software@gmail.com
+// [         calyr.     software@#__-=..com       ]
+//     a@a.a
 @JvmInline
 value class Email private constructor(val value: String) {
 

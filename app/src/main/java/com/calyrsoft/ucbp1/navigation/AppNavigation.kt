@@ -15,6 +15,7 @@ import com.calyrsoft.ucbp1.features.movie.domain.model.MovieModel
 import com.calyrsoft.ucbp1.features.movie.presentation.MovieDetailScreen
 import com.calyrsoft.ucbp1.features.movie.presentation.PopularMoviesScreen
 import com.calyrsoft.ucbp1.features.profile.application.ProfileScreen
+import com.calyrsoft.ucbp1.features.webview.presentation.AtuladoScreen
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.encodeToString
 import java.net.URLDecoder
@@ -52,7 +53,7 @@ fun AppNavigation(navigationViewModel: NavigationViewModel, modifier: Modifier, 
 
     NavHost(
         navController = navController,
-        startDestination = Screen.PopularMovies.route,
+        startDestination = Screen.Atulado.route,
         modifier = modifier
     ) {
         composable(Screen.Github.route) {
@@ -96,6 +97,17 @@ fun AppNavigation(navigationViewModel: NavigationViewModel, modifier: Modifier, 
                 back = {
                     navController.popBackStack()
                 })
+        }
+
+        composable(
+            Screen.Atulado.route
+        ) {
+            AtuladoScreen(
+                "https://www.bisa.com/atulado",
+                postData = null,
+                modifier = modifier,
+                shouldStopBrowsing = { true }
+            )
         }
     }
 

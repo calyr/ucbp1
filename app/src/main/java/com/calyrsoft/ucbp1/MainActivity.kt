@@ -135,7 +135,9 @@ class MainActivity : ComponentActivity() {
         val navBackStackEntry by
         navController.currentBackStackEntryAsState()
         val currentDestination = navBackStackEntry?.destination
-        val isMovieDetail = currentDestination?.route?.startsWith(Screen.MovieDetail.route) == true
+        val notShowTopBar =
+            (currentDestination?.route?.startsWith(Screen.MovieDetail.route) == true) ||
+            (currentDestination?.route?.startsWith(Screen.Atulado.route) == true)
         val navigationDrawerItems = listOf(
             NavigationDrawer.Profile,
             NavigationDrawer.Dollar,
@@ -148,7 +150,7 @@ class MainActivity : ComponentActivity() {
                     androidx.compose.material3.DrawerValue.Closed
             )
         val coroutineScope = rememberCoroutineScope()
-        if (isMovieDetail) {
+        if (notShowTopBar) {
             AppNavigation(
                 navController = navController,
                 navigationViewModel = navigationViewModel,

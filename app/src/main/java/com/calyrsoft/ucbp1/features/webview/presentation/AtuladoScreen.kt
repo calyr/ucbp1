@@ -41,7 +41,14 @@ fun AtuladoScreen(url: String,
     var navigateBack by remember { mutableStateOf(false) }
 
     BackHandler(enabled = true) {
+        if (canGoBack) {
+            val currentWebView = webView.value
 
+            if (currentWebView != null && currentWebView.canGoBack()) {
+                currentWebView.goBack()
+            }
+        }
+        navigateBack = false
     }
     LaunchedEffect(navigateBack) {
         if (navigateBack) {

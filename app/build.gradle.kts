@@ -4,7 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.google.gms.google.services)
     alias(libs.plugins.ksp)
-
+    alias(libs.plugins.kotlinSerialization)
 }
 
 android {
@@ -69,6 +69,9 @@ dependencies {
     implementation(libs.coil.compose)
     implementation(libs.coil.network)
     implementation(libs.androidx.navigation.compose)
+    //serialization
+    implementation(libs.kotlinx.serialization.json)
+
 
     //local bundle room
     implementation(libs.bundles.local)
@@ -81,5 +84,6 @@ dependencies {
     testImplementation(libs.mockk)
     testImplementation(libs.kotlinx.coroutines.test)
 
+    implementation(libs.androidx.work.runtime.ktx)
 
 }

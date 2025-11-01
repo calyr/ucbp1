@@ -23,9 +23,12 @@ ksp = "2.0.20-1.0.24"
 room = "2.8.0"
 firebaseMessaging = "25.0.0"
 datastore = "1.0.0"
+kotlinx-serialization = "1.7.3"
+workRuntimeKtx = "2.11.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "workRuntimeKtx" }
 coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coilCompose" }
 coil-network = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coilCompose" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
@@ -61,6 +64,7 @@ room-guava = { group="androidx.room", name="room-guava", version.ref="room"}
 room-testing = { group="androidx.room", name="room-testing", version.ref="room"}
 room-paging = { group="androidx.room", name="room-paging", version.ref="room"}
 firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging", version.ref = "firebaseMessaging" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -69,6 +73,8 @@ kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "ko
 google-gms-google-services = { id = "com.google.gms.google-services", version.ref = "googleGmsGoogleServices" }
 
 ksp = { id = "com.google.devtools.ksp", version.ref="ksp"}
+
+kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin"}
 
 [bundles]
 local = ["room-runtime", "room-ktx", "room-rxjava2", "room-rxjava3", "room-guava", "room-paging" ]

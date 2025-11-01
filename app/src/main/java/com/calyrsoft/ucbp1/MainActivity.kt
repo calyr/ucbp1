@@ -135,6 +135,9 @@ class MainActivity : ComponentActivity() {
         val navBackStackEntry by
         navController.currentBackStackEntryAsState()
         val currentDestination = navBackStackEntry?.destination
+        val notShowTopBar =
+            (currentDestination?.route?.startsWith(Screen.MovieDetail.route) == true) ||
+            (currentDestination?.route?.startsWith(Screen.Atulado.route) == true)
         val navigationDrawerItems = listOf(
             NavigationDrawer.Profile,
             NavigationDrawer.Dollar,
@@ -142,10 +145,18 @@ class MainActivity : ComponentActivity() {
             NavigationDrawer.Github
         )
         val drawerState =
-            rememberDrawerState(initialValue =
-                androidx.compose.material3.DrawerValue.Closed)
+            rememberDrawerState(
+                initialValue =
+                    androidx.compose.material3.DrawerValue.Closed
+            )
         val coroutineScope = rememberCoroutineScope()
-
+        if (notShowTopBar) {
+            AppNavigation(
+                navController = navController,
+                navigationViewModel = navigationViewModel,
+                modifier = Modifier
+            )
+        } else {
         ModalNavigationDrawer(
             drawerState = drawerState,
             drawerContent = {
@@ -159,13 +170,17 @@ class MainActivity : ComponentActivity() {
 
                         Image(
                             modifier = Modifier.width(120.dp),
-                            painter = painterResource(id =
-                                R.drawable.ic_launcher_background),
+                            painter = painterResource(
+                                id =
+                                    R.drawable.ic_launcher_background
+                            ),
                             contentDescription = "Logo",
                         )
                         Image(
-                            painter = painterResource(id =
-                                R.drawable.ic_launcher_foreground),
+                            painter = painterResource(
+                                id =
+                                    R.drawable.ic_launcher_foreground
+                            ),
                             contentDescription = "Logo",
                             modifier = Modifier.padding(16.dp)
                         )
@@ -175,8 +190,7 @@ class MainActivity : ComponentActivity() {
                         NavigationDrawerItem(
                             icon = {
                                 Icon(
-                                    imageVector = if (isSelected) item.
-                                    selectedIcon else item.unselectedIcon,
+                                    imageVector = if (isSelected) item.selectedIcon else item.unselectedIcon,
                                     contentDescription = item.label
                                 )
                             },
@@ -187,7 +201,8 @@ class MainActivity : ComponentActivity() {
                                     launchSingleTop = true
                                     restoreState = true
                                     popUpTo(
-                                        navController.graph.startDestinationId) {
+                                        navController.graph.startDestinationId
+                                    ) {
                                         saveState = true
                                     }
                                 }
@@ -202,6 +217,8 @@ class MainActivity : ComponentActivity() {
         ) {
             NavigationDrawerHost(coroutineScope, drawerState, navigationViewModel, navController)
         }
+
+    }
     }
 }
 

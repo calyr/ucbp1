@@ -1,13 +1,18 @@
 package com.calyrsoft.ucbp1.di
 
 import com.calyrsoft.ucbp1.R
+import com.calyrsoft.ucbp1.features.dollar.data.api.FirebaseService
 import com.calyrsoft.ucbp1.features.dollar.data.database.AppRoomDatabase
 import com.calyrsoft.ucbp1.features.dollar.data.datasource.DollarLocalDataSource
+import com.calyrsoft.ucbp1.features.dollar.data.datasource.DollarRemoteDataSource
 import com.calyrsoft.ucbp1.features.dollar.data.repository.DollarRepository
 import com.calyrsoft.ucbp1.features.dollar.data.datasource.RealTimeRemoteDataSource
+import com.calyrsoft.ucbp1.features.dollar.data.repository.FirebaseRepository
 import com.calyrsoft.ucbp1.features.dollar.domain.repository.IDollarRepository
+import com.calyrsoft.ucbp1.features.dollar.domain.repository.IFirebaseRepository
 import com.calyrsoft.ucbp1.features.dollar.domain.usecase.FetchDollarParallelUseCase
 import com.calyrsoft.ucbp1.features.dollar.domain.usecase.FetchDollarUseCase
+import com.calyrsoft.ucbp1.features.dollar.domain.usecase.UpdateDollarUseCase
 import com.calyrsoft.ucbp1.features.dollar.presentation.DollarViewModel
 import com.calyrsoft.ucbp1.features.github.data.api.GithubService
 import com.calyrsoft.ucbp1.features.github.data.datasource.GithubRemoteDataSource
@@ -34,7 +39,6 @@ import com.calyrsoft.ucbp1.features.profile.domain.repository.IProfileRepository
 import com.calyrsoft.ucbp1.features.profile.domain.usecase.GetProfileUseCase
 import com.calyrsoft.ucbp1.navigation.NavigationViewModel
 import okhttp3.OkHttpClient
-import org.koin.android.BuildConfig
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -49,6 +53,10 @@ object NetworkConstants {
     const val GITHUB_BASE_URL = "https://api.github.com/"
     const val RETROFIT_MOVIE = "RetrofitMovie"
     const val MOVIE_BASE_URL = "https://api.themoviedb.org/"
+
+    const val RETROFIT_FIREBASE = "RetrofitFirebase"
+
+    const val FIREBASE_BASE_URL = "https://nowapp-b7b95-default-rtdb.firebaseio.com/"
 }
 
 val appModule = module {
@@ -81,6 +89,14 @@ val appModule = module {
             .build()
     }
 
+    single(named(NetworkConstants.RETROFIT_FIREBASE)) {
+        Retrofit.Builder()
+            .baseUrl(NetworkConstants.FIREBASE_BASE_URL)
+            .client(get())
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
+
     // GithubService
     single<GithubService> {
         get<Retrofit>( named(NetworkConstants.RETROFIT_GITHUB)).create(GithubService::class.java)
@@ -102,7 +118,7 @@ val appModule = module {
     single<IDollarRepository> { DollarRepository(get(), get()) }
     factory { FetchDollarUseCase(get()) }
     factory { FetchDollarParallelUseCase(get()) }
-    viewModel{ DollarViewModel(get(), get()) }
+    viewModel{ DollarViewModel(get(), get(), get()) }
 
 
     single(named("apiKey")) {
@@ -111,6 +127,10 @@ val appModule = module {
 
     single<MovieService> {
         get<Retrofit>(named(NetworkConstants.RETROFIT_MOVIE)).create(MovieService::class.java)
+    }
+
+    single<FirebaseService> {
+        get<Retrofit>(named(NetworkConstants.RETROFIT_FIREBASE)).create(FirebaseService::class.java)
     }
     single(named("movieDao")) { get<AppRoomDatabase>().movieDao() }
     single { MovieRemoteDataSource(get(), get(named("apiKey"))) }
@@ -125,4 +145,11 @@ val appModule = module {
     single<IRepositoryDataStore>{RepositoryDataStore(get())}
     factory { GetTokenUseCase(get()) }
     factory { SaveTokenUseCase(get()) }
+
+    single { DollarRemoteDataSource(get()) }
+    single<IFirebaseRepository>{FirebaseRepository(get())}
+    factory { UpdateDollarUseCase(get()) }
+
+
+
 }

@@ -5,6 +5,4 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @OptIn(ExperimentalCoroutinesApi::class)
 class GithubRepositoryTest {
 
-
-    fun
 }

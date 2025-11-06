@@ -53,7 +53,7 @@ fun AppNavigation(navigationViewModel: NavigationViewModel, modifier: Modifier, 
 
     NavHost(
         navController = navController,
-        startDestination = Screen.Atulado.route,
+        startDestination = Screen.PopularMovies.route,
         modifier = modifier
     ) {
         composable(Screen.Github.route) {

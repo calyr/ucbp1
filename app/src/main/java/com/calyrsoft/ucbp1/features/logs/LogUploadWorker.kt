@@ -17,16 +17,17 @@ class LogUploadWorker(
     override suspend fun doWork(): Result {
         //ejecutar instrucción para subir datos
         println("ejecutar instrucción para subir datos")
-        val response = fetchPopularMoviesUseCase.invoke()
-        response.fold(
-            onFailure = {
-                return Result.failure()
-            },
-            onSuccess = {
-                println("datos subidos ${it.size}")
-                return Result.success()
-            }
-        )
+        return Result.success()
+//        val response = fetchPopularMoviesUseCase.invoke()
+//        response.fold(
+//            onFailure = {
+//                return Result.failure()
+//            },
+//            onSuccess = {
+//                println("datos subidos ${it.size}")
+//                return Result.success()
+//            }
+//        )
 
     }
 }
